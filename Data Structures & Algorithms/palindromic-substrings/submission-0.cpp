@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int count = 0, n = s.length();
+        vector<vector<int>> dp (n, vector<int>(n, 0));
+
+        for (int i = 0; i<n; i++){
+            for(int j = i; j<n; j++){
+                int k = j - i;
+
+                if(k==j){
+                    dp[k][j] = 1;
+                    count++;
+                    continue;
+                }
+                
+                if(s[k]==s[j]){
+                    if(k+1 <= j - 1){
+                        if(dp[k+1][j-1]>0){
+                            dp[k][j] = 2 + dp[k+1][j-1];
+                        }
+                        else{
+                            dp[k][j] = 0;
+                        }
+                    }
+                    else{
+                        dp[k][j] = 2;
+                    }
+                }
+                if(dp[k][j]>0){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+};
